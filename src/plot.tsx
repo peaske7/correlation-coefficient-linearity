@@ -25,9 +25,9 @@ const generateData = (
 	noise: number,
 	n = 101,
 ): Array<DataPoint> => {
-	const x = Array.from({ length: n }, (_, i) => i);
-	const y = x.map((val) => (val / n) ** power + (Math.random() - 0.5) * noise);
-	const powY = x.map((val) => (val / n) ** power);
+	const x = Array.from({ length: n }, (_, i) => i / n);
+	const y = x.map((val) => val ** power + (Math.random() - 0.5) * noise);
+	const powY = x.map((val) => val ** power);
 	const points = x.map((val, i) => ({ x: val, y: y[i], powY: powY[i] }));
 	return points;
 };
@@ -69,11 +69,12 @@ export const Plot = () => {
 				<div className="mb-4">
 					<p>
 						This is an interactive plot that shows the correlation between the
-						data points and the function <span className="inline-block">y = x^power</span>.
-						You can add "noise" (some randomness) to the data points to simulate
-						a more realistic dataset.
-						This is a visual demonstration of how, even if the correlation coefficient
-						is relatively high, we can't deem the relationship to be linear.
+						data points and the function{" "}
+						<span className="inline-block">y = x^power</span>. You can add
+						"noise" (some randomness) to the data points to simulate a more
+						realistic dataset. This is a visual demonstration of how, even if
+						the correlation coefficient is relatively high, we can't deem the
+						relationship to be linear.
 					</p>
 				</div>
 				<div className="mb-4 w-full">
@@ -108,7 +109,6 @@ export const Plot = () => {
 						<CartesianGrid />
 						<XAxis type="number" dataKey="x" name="X" domain={[0, 1]} />
 						<YAxis type="number" dataKey="y" name="Y" />
-						<Tooltip cursor={{ strokeDasharray: "3 3" }} />
 						<Legend />
 						<Scatter name="Data Points" fill="#8884d8" data={data} />
 						<Line
